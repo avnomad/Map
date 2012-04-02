@@ -18,6 +18,9 @@ using std::vector;
 using std::begin;
 using std::end;
 
+#include <list>
+using std::list;
+
 
 class Dummy{};
 
@@ -35,20 +38,20 @@ struct Propagate : B
 };
 
 
+template<typename T>
+struct Identity : T {};
+
+
 template<typename Iter>
-auto fun(Iter inBegin,       Dummy &dummy)->decltype(*begin(*inBegin),*end(*inBegin),true_type());
+auto fun(Iter inBegin,       Dummy &dummy)->decltype(*begin(*inBegin),*end(*inBegin),
+	integral_constant<unsigned,Identity<decltype(fun(begin(*inBegin),dummy))>::value+1u>());
 template<typename Iter>
-auto fun(Iter inBegin, const Dummy &dummy)->false_type;
+auto fun(Iter inBegin, const Dummy &dummy)->integral_constant<unsigned,0u>;
 
 
-template<typename T> struct Test;
 
-template<>
-struct Test<true_type> : true_type
-{};
-template<>
-struct Test<false_type> : false_type
-{};
+
+
 
 
 int main()
@@ -58,10 +61,13 @@ int main()
 
 	vector<double> vd;
 	vector<vector<double>> vvd;
+	vector<vector<vector<int>>> vvvi;
+	list<vector<vector<list<unsigned>>>> lvvlu;
 
-	wcout << Test<decltype(fun(begin(vd),dummy))>::value << endl;
-	wcout << Test<decltype(fun(begin(vvd),dummy))>::value << endl;
-
+	wcout << Identity<decltype(fun(begin(vd),dummy))>::value << endl;
+	wcout << Identity<decltype(fun(begin(vvd),dummy))>::value << endl;
+	wcout << Identity<decltype(fun(begin(vvvi),dummy))>::value << endl;
+	wcout << Identity<decltype(fun(begin(lvvlu),dummy))>::value << endl;
 
 	//wcout << fun(begin(vd),dummy) << endl;
 	//wcout << fun(begin(vvd),dummy) << endl;
