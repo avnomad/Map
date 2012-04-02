@@ -16,16 +16,8 @@ using std::is_convertible;
 class Dummy{};
 
 
-bool fun(const Dummy &dummy)
-{
-	return false;
-} // end function fun
-
-
-bool fun(Dummy &dummy)
-{
-	return true;
-} // end function fun
+false_type fun(const Dummy &dummy);
+true_type fun(Dummy &dummy);
 
 
 template<typename T>
@@ -42,7 +34,7 @@ int main()
 
 	wcout << t.value << endl;
 
-	wcout << fun(Dummy()) << endl;
+	wcout << Test<decltype(fun(Dummy()))>::value << endl;
 	system("pause");
 	return 0;
 } // end function main
