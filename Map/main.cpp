@@ -36,20 +36,18 @@ struct Propagate : B
 
 
 template<typename Iter>
-auto fun(Iter inBegin,       Dummy &dummy)->decltype(*begin(*inBegin),*end(*inBegin),1)
-{return true;}
+auto fun(Iter inBegin,       Dummy &dummy)->decltype(*begin(*inBegin),*end(*inBegin),true_type());
 template<typename Iter>
-auto fun(Iter inBegin, const Dummy &dummy)->bool
-{return false;}
+auto fun(Iter inBegin, const Dummy &dummy)->false_type;
 
 
 template<typename T> struct Test;
 
 template<>
-struct Test<int> : true_type
+struct Test<true_type> : true_type
 {};
 template<>
-struct Test<bool> : false_type
+struct Test<false_type> : false_type
 {};
 
 
@@ -65,8 +63,8 @@ int main()
 	wcout << Test<decltype(fun(begin(vvd),dummy))>::value << endl;
 
 
-	wcout << fun(begin(vd),dummy) << endl;
-	wcout << fun(begin(vvd),dummy) << endl;
+	//wcout << fun(begin(vd),dummy) << endl;
+	//wcout << fun(begin(vvd),dummy) << endl;
 
 	system("pause");
 	return 0;
