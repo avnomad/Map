@@ -13,9 +13,13 @@ using std::integral_constant;
 using std::is_same;
 using std::is_convertible;
 
+#include <vector>
+using std::vector;
+using std::begin;
+using std::end;
+
+
 class Dummy{};
-
-
 
 
 template<typename T>
@@ -30,17 +34,27 @@ struct Propagate : B
 	static_assert(is_same<B,true_type>::value || is_same<B,false_type>::value,"B is neither true_type nor false_type");
 };
 
-//auto fun(const Dummy &dummy)->Propagate<false_type,decltype(dummy)>::type;
-auto fun(      Dummy &dummy)->Propagate<true_type,decltype(dummy)>::type;
+
+template<typename Iter>
+auto fun(Iter inBegin,       Dummy &dummy)->decltype(*begin(*inBegin),true)
+{return true;}
+template<typename Iter>
+auto fun(Iter inBegin, const Dummy &dummy)->bool
+{return false;}
+
 
 int main()
 {
+	Dummy dummy;
 	wcout << std::boolalpha;
-	Test<true_type> t;
 
-	wcout << t.value << endl;
+	vector<double> vd;
+	vector<vector<double>> vvd;
 
-	wcout << Test<decltype(fun(Dummy()))>::value << endl;
+
+	wcout << fun(begin(vd),dummy) << endl;
+	wcout << fun(begin(vvd),dummy) << endl;
+
 	system("pause");
 	return 0;
 } // end function main
