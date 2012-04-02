@@ -22,11 +22,11 @@ using std::end;
 class Dummy{};
 
 
-template<typename T>
-struct Test : T
-{
-	static_assert(is_same<T,true_type>::value || is_same<T,false_type>::value,"T is neither true_type nor false_type");
-};
+//template<typename T>
+//struct Test : T
+//{
+//	static_assert(is_same<T,true_type>::value || is_same<T,false_type>::value,"T is neither true_type nor false_type");
+//};
 
 template<typename B,typename T>
 struct Propagate : B
@@ -36,11 +36,21 @@ struct Propagate : B
 
 
 template<typename Iter>
-auto fun(Iter inBegin,       Dummy &dummy)->decltype(*begin(*inBegin),true)
+auto fun(Iter inBegin,       Dummy &dummy)->decltype(*begin(*inBegin),*end(*inBegin),1)
 {return true;}
 template<typename Iter>
 auto fun(Iter inBegin, const Dummy &dummy)->bool
 {return false;}
+
+
+template<typename T> struct Test;
+
+template<>
+struct Test<int> : true_type
+{};
+template<>
+struct Test<bool> : false_type
+{};
 
 
 int main()
@@ -50,6 +60,9 @@ int main()
 
 	vector<double> vd;
 	vector<vector<double>> vvd;
+
+	wcout << Test<decltype(fun(begin(vd),dummy))>::value << endl;
+	wcout << Test<decltype(fun(begin(vvd),dummy))>::value << endl;
 
 
 	wcout << fun(begin(vd),dummy) << endl;
