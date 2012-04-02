@@ -51,7 +51,17 @@ auto fun(Iter inBegin, const Dummy &dummy)->integral_constant<unsigned,0u>;
 
 
 
+template<unsigned n>
+void f()
+{
+	wcout << "some" << endl;
+}
 
+template<>
+void f<0>()
+{
+	wcout << "none" << endl;
+}
 
 
 int main()
@@ -59,15 +69,18 @@ int main()
 	Dummy dummy;
 	wcout << std::boolalpha;
 
-	vector<double> vd;
-	vector<vector<double>> vvd;
-	vector<vector<vector<int>>> vvvi;
-	list<vector<vector<list<unsigned>>>> lvvlu;
+	f<5>();
+	f<0>();
 
-	wcout << Identity<decltype(fun(begin(vd),dummy))>::value << endl;
-	wcout << Identity<decltype(fun(begin(vvd),dummy))>::value << endl;
-	wcout << Identity<decltype(fun(begin(vvvi),dummy))>::value << endl;
-	wcout << Identity<decltype(fun(begin(lvvlu),dummy))>::value << endl;
+	//vector<double> vd;
+	//vector<vector<double>> vvd;
+	//vector<vector<vector<int>>> vvvi;
+	//list<vector<vector<list<unsigned>>>> lvvlu;
+
+	//wcout << Identity<decltype(fun(begin(vd),dummy))>::value << endl;
+	//wcout << Identity<decltype(fun(begin(vvd),dummy))>::value << endl;
+	//wcout << Identity<decltype(fun(begin(vvvi),dummy))>::value << endl;
+	//wcout << Identity<decltype(fun(begin(lvvlu),dummy))>::value << endl;
 
 	//wcout << fun(begin(vd),dummy) << endl;
 	//wcout << fun(begin(vvd),dummy) << endl;
