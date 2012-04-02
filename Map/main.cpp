@@ -16,8 +16,6 @@ using std::is_convertible;
 class Dummy{};
 
 
-false_type fun(const Dummy &dummy);
-true_type fun(Dummy &dummy);
 
 
 template<typename T>
@@ -26,6 +24,14 @@ struct Test : T
 	static_assert(is_same<T,true_type>::value || is_same<T,false_type>::value,"T is neither true_type nor false_type");
 };
 
+template<typename B,typename T>
+struct Propagate : B
+{
+	static_assert(is_same<B,true_type>::value || is_same<B,false_type>::value,"B is neither true_type nor false_type");
+};
+
+//auto fun(const Dummy &dummy)->Propagate<false_type,decltype(dummy)>::type;
+auto fun(      Dummy &dummy)->Propagate<true_type,decltype(dummy)>::type;
 
 int main()
 {
