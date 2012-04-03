@@ -231,7 +231,10 @@ int main()
 	//map(vi.begin(),vi.end(),vi.begin(),h);
 	//printAll();
 	wcout << "\n";
-	//map(vi.begin(),vi.end(),vi.begin(),h);
+	//map(vi.begin(),vi.end(),vi.begin(),h);	// error: static assertion failed
+	//map(vvi.begin(),vvi.end(),vvi.begin(),h);	// error: static assertion failed
+	//map(vvi.begin(),vvi.end(),vi.begin(),f);	// error: static assertion failed
+	//map(vi.begin(),vi.end(),vvi.begin(),f);	// error: static assertion failed
 	//*vi.begin() = h(*vi.begin());
 	system("pause");
 	return 0;
