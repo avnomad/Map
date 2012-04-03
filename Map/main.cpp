@@ -13,7 +13,6 @@ using std::system;
 #include <vector>
 using std::vector;
 
-
 #include <list>
 using std::list;
 
@@ -45,6 +44,7 @@ vector<int> vi(size);
 //vector<double> vd2(size);
 vector<vector<int>> vvi(rows,vector<int>(size));
 vector<vector<double>> vvd(rows,vector<double>(size));
+double cad[rows][size];
 
 void printAll()
 {
@@ -72,6 +72,14 @@ void printAll()
 		wcout << "\n";
 	} // end for
 	wcout << "\n\n";
+
+	for(auto i = 0u ; i < rows ; i++)
+	{
+		for(auto j = 0u ; j < size ; j++)
+			wcout << setw(6) << cad[i][j];
+		wcout << "\n";
+	} // end for
+	wcout << "\n\n";
 } // end printAll
 
 
@@ -94,6 +102,10 @@ int main()
 	for(auto i = 0u ; i < vvd.size() ; i++)
 		for(auto j = 0u ; j < vvd[i].size() ; j++)
 			vvd[i][j] = (i*vvd.size()+j)*1.1;
+
+	for(auto i = 0u ; i < rows ; i++)
+		for(auto j = 0u ; j < size ; j++)
+			cad[i][j] = (i*rows+j)*1.1+0.1;
 
 	printAll();
 
@@ -131,6 +143,12 @@ int main()
 	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vvd.begin(),vvd.end(),vvd.begin(),g,dummy))>::value << endl;
 	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vvd.begin(),vvd.end(),vvd.begin(),g,dummy))>::value << endl;
 	map(vvd.begin(),vvd.end(),vvd.begin(),g);
+	printAll();
+	wcout << "\n";
+	wcout << "cad->cad f\n";
+	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(begin(cad),end(cad),begin(cad),f,dummy))>::value << endl;
+	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(begin(cad),end(cad),begin(cad),f,dummy))>::value << endl;
+	map(begin(cad),end(cad),begin(cad),f);
 	printAll();
 	wcout << "\n";
 	wcout << "vi->vi h\n";
