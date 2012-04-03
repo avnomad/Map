@@ -140,7 +140,7 @@ vector<vector<double>> vvd(rows,vector<double>(size));
 
 void printAll()
 {
-	wcout << "----------------------------\n";
+	wcout << "------------------------------------------\n";
 	for(auto i = 0u ; i < vd.size() ; i++)
 		wcout << setw(6) << vd[i];
 	wcout << "\n\n";
@@ -189,35 +189,47 @@ int main()
 
 	printAll();
 
-	wcout << "vi->vd\n";
+	wcout << "vi->vd f\n";
+	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vi.begin(),vi.end(),vd.begin(),f,dummy))>::value << endl;
+	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vi.begin(),vi.end(),vd.begin(),f,dummy))>::value << endl;
 	map(vi.begin(),vi.end(),vd.begin(),f);
-	wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vi.begin(),vi.end(),vd.begin(),f,dummy))>::value << endl;
-	wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vi.begin(),vi.end(),vd.begin(),f,dummy))>::value << endl;
 	printAll();
 	wcout << "\n";
-	wcout << "vvi->vvd\n";
-	wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vvi.begin(),vvi.end(),vvd.begin(),f,dummy))>::value << endl;
-	wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vvi.begin(),vvi.end(),vvd.begin(),f,dummy))>::value << endl;
+	wcout << "vvi->vvd f\n";
+	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vvi.begin(),vvi.end(),vvd.begin(),f,dummy))>::value << endl;
+	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vvi.begin(),vvi.end(),vvd.begin(),f,dummy))>::value << endl;
+	map(vvi.begin(),vvi.end(),vvd.begin(),f);
+	printAll();
 	wcout << "\n";
-	wcout << "vd->vd\n";
-	wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vd.begin(),vd.end(),vd.begin(),f,dummy))>::value << endl;
-	wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vd.begin(),vd.end(),vd.begin(),f,dummy))>::value << endl;
+	wcout << "vd->vd f\n";
+	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vd.begin(),vd.end(),vd.begin(),f,dummy))>::value << endl;
+	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vd.begin(),vd.end(),vd.begin(),f,dummy))>::value << endl;
+	map(vd.begin(),vd.end(),vd.begin(),f);
+	printAll();
 	wcout << "\n";
-	wcout << "vd->vi\n";
-	wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vd.begin(),vd.end(),vi.begin(),f,dummy))>::value << endl;
-	wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vd.begin(),vd.end(),vi.begin(),f,dummy))>::value << endl;
+	wcout << "vd->vi f\n";
+	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vd.begin(),vd.end(),vi.begin(),f,dummy))>::value << endl;
+	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vd.begin(),vd.end(),vi.begin(),f,dummy))>::value << endl;
+	map(vd.begin(),vd.end(),vi.begin(),f);
+	printAll();
 	wcout << "\n";
-	wcout << "vvd->vvi\n";
-	wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vvd.begin(),vvd.end(),vvi.begin(),f,dummy))>::value << endl;
-	wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vvd.begin(),vvd.end(),vvi.begin(),f,dummy))>::value << endl;
+	wcout << "vvd->vvi f\n";
+	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vvd.begin(),vvd.end(),vvi.begin(),f,dummy))>::value << endl;
+	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vvd.begin(),vvd.end(),vvi.begin(),f,dummy))>::value << endl;
+	map(vvd.begin(),vvd.end(),vvi.begin(),f);
+	printAll();
 	wcout << "\n";
 	wcout << "vvd->vvd g\n";
-	wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vvd.begin(),vvd.end(),vvd.begin(),g,dummy))>::value << endl;
-	wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vvd.begin(),vvd.end(),vvd.begin(),g,dummy))>::value << endl;
+	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vvd.begin(),vvd.end(),vvd.begin(),g,dummy))>::value << endl;
+	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vvd.begin(),vvd.end(),vvd.begin(),g,dummy))>::value << endl;
+	map(vvd.begin(),vvd.end(),vvd.begin(),g);
+	printAll();
 	wcout << "\n";
 	wcout << "vi->vi h\n";
-	wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vi.begin(),vi.end(),vi.begin(),h,dummy))>::value << endl;
-	wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vi.begin(),vi.end(),vi.begin(),h,dummy))>::value << endl;
+	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(vi.begin(),vi.end(),vi.begin(),h,dummy))>::value << endl;
+	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(vi.begin(),vi.end(),vi.begin(),h,dummy))>::value << endl;
+	//map(vi.begin(),vi.end(),vi.begin(),h);
+	//printAll();
 	wcout << "\n";
 	//map(vi.begin(),vi.end(),vi.begin(),h);
 	//*vi.begin() = h(*vi.begin());
