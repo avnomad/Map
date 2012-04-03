@@ -146,9 +146,9 @@ int main()
 	printAll();
 	wcout << "\n";
 	wcout << "cad->cad f\n";
-	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(begin(cad),end(cad),begin(cad),f,dummy))>::value << endl;
-	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(begin(cad),end(cad),begin(cad),f,dummy))>::value << endl;
-	map(begin(cad),end(cad),begin(cad),f);
+	//wcout << "checkBaseCase: " << Workaround<decltype(checkBaseCase(std::begin(cad),std::end(cad),std::begin(cad),f,dummy))>::value << endl;
+	//wcout << "checkRecursiveStep: " << Workaround<decltype(checkRecursiveStep(std::begin(cad),std::end(cad),std::begin(cad),f,dummy))>::value << endl;
+	map(std::begin(cad),std::end(cad),std::begin(cad),f);
 	printAll();
 	wcout << "\n";
 	wcout << "vi->vi h\n";

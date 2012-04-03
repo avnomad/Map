@@ -2,32 +2,30 @@
 #define MAP_H
 
 #include <type_traits>
-using std::true_type;
-using std::false_type;
-
 #include <iterator>
-using std::begin;
-using std::end;
 
+namespace Check
+{
+	using std::begin;
+	using std::end;
 
-class Dummy{} dummy;
-template<typename T> struct Workaround : T {};
+	class Dummy{} dummy;
+	template<typename T> struct Workaround : T {};
 
-template<typename IIter, typename OIter, typename Func>
-auto checkBaseCase(IIter inBegin, IIter inEnd, OIter outBegin, Func f, Dummy &dummy)->
-	decltype(inBegin != inEnd,*outBegin = f(*inBegin),++inBegin,++outBegin,true_type());
+	template<typename IIter, typename OIter, typename Func>
+	auto baseCase(IIter inBegin, IIter inEnd, OIter outBegin, Func f, Dummy &dummy)->
+		decltype(inBegin != inEnd,*outBegin = f(*inBegin),++inBegin,++outBegin,std::true_type());
 
-template<typename IIter, typename OIter, typename Func>
-auto checkBaseCase(IIter inBegin, IIter inEnd, OIter outBegin, Func f, const Dummy &dummy)->false_type;
+	template<typename IIter, typename OIter, typename Func>
+	auto baseCase(IIter inBegin, IIter inEnd, OIter outBegin, Func f, const Dummy &dummy)->std::false_type;
 
-template<typename IIter, typename OIter, typename Func>
-auto checkRecursiveStep(IIter inBegin, IIter inEnd, OIter outBegin, Func f, Dummy &dummy)->
-	decltype(inBegin != inEnd,begin(*inBegin),end(*inBegin),begin(*outBegin),++inBegin,++outBegin,true_type());
-		// chech whether is_same<decltype(begin(*inBegin)),decltype(end(*inBegin))> ?
-template<typename IIter, typename OIter, typename Func>
-auto checkRecursiveStep(IIter inBegin, IIter inEnd, OIter outBegin, Func f, const Dummy &dummy)->false_type;
-
-
+	template<typename IIter, typename OIter, typename Func>
+	auto recursiveStep(IIter inBegin, IIter inEnd, OIter outBegin, Func f, Dummy &dummy)->
+		decltype(inBegin != inEnd,begin(*inBegin),end(*inBegin),begin(*outBegin),++inBegin,++outBegin,std::true_type());
+			// chech whether is_same<decltype(begin(*inBegin)),decltype(end(*inBegin))> ?
+	template<typename IIter, typename OIter, typename Func>
+	auto recursiveStep(IIter inBegin, IIter inEnd, OIter outBegin, Func f, const Dummy &dummy)->std::false_type;
+}; // end namespace Check
 
 template<typename IIter, typename OIter, typename Func>
 void map(IIter inBegin, IIter inEnd, OIter outBegin, Func f);
@@ -52,8 +50,8 @@ struct Map<true>
 	template<typename IIter, typename OIter, typename Func>
 	static void mapRecursiveStep(IIter inBegin, IIter inEnd, OIter outBegin, Func f)
 	{
-		//using std::begin;
-		//using std::end;
+		using std::begin;
+		using std::end;
 
 		while(inBegin != inEnd)
 		{
@@ -85,13 +83,13 @@ struct Map<false>
 template<typename IIter, typename OIter, typename Func>
 void map(IIter inBegin, IIter inEnd, OIter outBegin, Func f)
 {
-	Map<Workaround<decltype(checkBaseCase(inBegin,inEnd,outBegin,f,dummy))>::value>
+	Map<Check::Workaround<decltype(Check::baseCase(inBegin,inEnd,outBegin,f,Check::dummy))>::value>
 		::mapBaseCase(inBegin,inEnd,outBegin,f);
-	Map<!Workaround<decltype(checkBaseCase(inBegin,inEnd,outBegin,f,dummy))>::value
-		&& Workaround<decltype(checkRecursiveStep(inBegin,inEnd,outBegin,f,dummy))>::value>
+	Map<!Check::Workaround<decltype(Check::baseCase(inBegin,inEnd,outBegin,f,Check::dummy))>::value
+		&& Check::Workaround<decltype(Check::recursiveStep(inBegin,inEnd,outBegin,f,Check::dummy))>::value>
 			::mapRecursiveStep(inBegin,inEnd,outBegin,f);
-	static_assert(Workaround<decltype(checkBaseCase(inBegin,inEnd,outBegin,f,dummy))>::value
-		|| Workaround<decltype(checkRecursiveStep(inBegin,inEnd,outBegin,f,dummy))>::value,
+	static_assert(Check::Workaround<decltype(Check::baseCase(inBegin,inEnd,outBegin,f,Check::dummy))>::value
+		|| Check::Workaround<decltype(Check::recursiveStep(inBegin,inEnd,outBegin,f,Check::dummy))>::value,
 			"Neither the base case nor the recursive step of map can be applied to this combination of iterators and function");
 } // end function map
 
